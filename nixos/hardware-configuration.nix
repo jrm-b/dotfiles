@@ -11,11 +11,12 @@
 
   boot.initrd.availableKernelModules = [ "amd_gpu" "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "amdgpu" ];
-  boot.initrd.kernelParams = [ "acpi_osi=linux" ];
   boot.initrd.luks.devices."cryptroot" =
     { device = "/dev/disk/by-label/NIXOS_LUKS";
       preLVM = true;
     };
+
+  boot.kernelParams = [ "acpi_osi=linux" ];
   boot.kernelModules = [ "kvm-amd" "zenpower" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ "zenpower" ];
 
@@ -40,8 +41,8 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  harware.bluetooth.enable = true;
-  harware.bluetooth.powerOnBoot = false;
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = false;
 
   hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

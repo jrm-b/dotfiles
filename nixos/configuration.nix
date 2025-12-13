@@ -9,8 +9,8 @@
   boot.loader.timeout = 3;
   boot.plymouth.enable = false;
 
-  time.timezone = "Europe/Paris";
-  networking.networkManager.enable = true;
+  time.timeZone = "Europe/Paris";
+  networking.networkmanager.enable = true;
 
   console.keyMap = "fr";
   i18n.defaultLocale = "fr_FR.UTF-8";
@@ -52,15 +52,12 @@
     priority = 100;
     memoryPercent = 30;
     swapDevices = 1;
-    algorith = "zstd";
+   algorithm = "zstd";
   };
 
   nix.settings = {
     auto-optimise-store = true;
     experimental-features = [ "nix-command" "flakes" ];
-    gc.automatic = false;
-    gc.dates = "weekly";
-    gc.options = "--delete-older-than-7d";
   };
   
   virtualisation.libvirtd.enable = true;
@@ -68,5 +65,6 @@
   virtualisation.docker.rootless.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";
 }

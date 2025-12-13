@@ -17,7 +17,8 @@
     };
   in {
     nixosConfigurations."matebook" = nixpkgs.lib.nixosSystem
-      { specialArgs = { inherit system };
+      { inherit system;
+        specialArgs = {};
         modules = [
           ./configuration.nix
           ./modules/fonts.nix
