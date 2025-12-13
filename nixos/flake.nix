@@ -18,8 +18,11 @@
   in {
     nixosConfigurations."matebook" = nixpkgs.lib.nixosSystem
       { specialArgs = { inherit system };
-        modules =
-          [ ./configuration.nix ];
+        modules = [
+          ./configuration.nix
+          ./modules/fonts.nix
+          ./modules/hyprland.nix
+        ];
     };
   };
 }
