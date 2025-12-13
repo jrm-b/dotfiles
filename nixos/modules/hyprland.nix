@@ -15,6 +15,7 @@
     hyprlock
     wlogout
     wl-clipboard
+    ungoogled-chromium
     rofi
     waybar
   ];
