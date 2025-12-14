@@ -18,16 +18,13 @@
   in {
     nixosConfigurations."matebook" = nixpkgs.lib.nixosSystem
       { inherit system;
+	inherit pkgs;
         specialArgs = {};
         modules = [
           ./configuration.nix
           ./modules/fonts.nix
           ./modules/hyprland.nix
         ];
-    };
-    homeConfigurations."jeremy" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [ ./home.nix ];
     };
   };
 }

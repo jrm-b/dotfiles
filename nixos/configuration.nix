@@ -1,4 +1,4 @@
-{config, nixpkgs, ... }:
+{config, pkgs, ... }:
 
 {
   imports =
@@ -10,6 +10,7 @@
   boot.plymouth.enable = false;
 
   time.timeZone = "Europe/Paris";
+  networking.hostName = "matebook";
   networking.networkmanager.enable = true;
 
   console.keyMap = "fr";
@@ -25,6 +26,20 @@
     LC_PAPER = "fr_FR.UTF-8";
     LC_TELEPHONE = "fr_FR.UTF-8";
     LC_TIME = "fr_FR.UTF-8";
+  };
+
+  programs.bash.enable = true;
+  users.defaultUserShell = pkgs.bash;
+
+  users.users.jeremy = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "networkmanager" "kvm" "input" ];
+    packages = with pkgs; [
+      eza
+      git
+      starship
+      vim
+    ];
   };
 
   services = {
@@ -52,7 +67,7 @@
     priority = 100;
     memoryPercent = 30;
     swapDevices = 1;
-   algorithm = "zstd";
+    algorithm = "zstd";
   };
 
   nix.settings = {
@@ -65,6 +80,5 @@
   virtualisation.docker.rootless.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";
 }

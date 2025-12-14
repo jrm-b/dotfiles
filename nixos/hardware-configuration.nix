@@ -9,34 +9,28 @@
 
   services.fstrim.enable = true;
 
-  boot.initrd.availableKernelModules = [ "amd_gpu" "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" "amdgpu" ];
-  boot.initrd.luks.devices."cryptroot" =
-    { device = "/dev/disk/by-label/NIXOS_LUKS";
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" ];
+  boot.initrd.luks.devices."crypted" =
+    { device = "/dev/nvme0n1p2";
       preLVM = true;
     };
 
   boot.kernelParams = [ "acpi_osi=linux" ];
   boot.kernelModules = [ "kvm-amd" "zenpower" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ "zenpower" ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXOS_ROOT";
-      fsType = "ext4";
-    };
-
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-label/NIXOS_NIX";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-label/NIXOS_HOME";
+    { device = "/dev/disk/by-label/home";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXOS_BOOT";
+    { device = "/dev/disk/by-label/boot";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
